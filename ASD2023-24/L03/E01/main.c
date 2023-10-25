@@ -3,7 +3,7 @@
 
 int majority(int *vec, int N);
 int r_majority(int l, int r, int *vec);
-int val_count(int l, int r, int magl, int *vec);
+int val_count(int l, int r, int val, int *vec);
 
 int main(){
     int N, *vec;
@@ -42,4 +42,13 @@ int r_majority(int l, int r, int *vec){
     if(countr >= countl) return magr;
     return magl;
 
+}
+
+int val_count(int l, int r, int val, int *vec){
+    int count = 0;
+
+    for (int i = l; i < r; ++i) {
+        if(vec[i] == val) count++;
+    }
+    return count;
 }
