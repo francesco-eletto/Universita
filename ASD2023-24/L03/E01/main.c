@@ -34,9 +34,9 @@ int r_majority(int l, int r, int *vec){
     q = (l+r)/2;
 
     magl = r_majority(l, q, vec);
-    countl = val_count(l, q, magl, vec);
+    countl = val_count(l, r, magl, vec);
     magr = r_majority(q+1,r, vec);
-    countr = val_count(q+1, r, magr, vec);
+    countr = val_count(l, r, magr, vec);
 
     if(magr == magl) return magr;
     if(countr >= countl) return magr;
