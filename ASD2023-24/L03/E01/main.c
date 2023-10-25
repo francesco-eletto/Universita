@@ -50,5 +50,6 @@ int val_count(int l, int r, int val, int *vec){
     for (int i = l; i < r; ++i) {
         if(vec[i] == val) count++;
     }
+    if (count <= (r-l)/2 + 1) return -1;
     return count;
 }
