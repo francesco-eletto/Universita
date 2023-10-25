@@ -11,14 +11,18 @@ int main(){
     printf("Dimensione del vettore:\n");
     scanf("%d", &N);
     vec = (int *)malloc(N*sizeof(int));
-    printf("Digita i %d interi: ", N);
+    printf("Digita i %d interi:\n", N);
     for (int i = 0; i < N; ++i) {
         scanf("%d",&vec[i]);
 
     }
 
     result = majority(vec, N);
-    printf("%d", result);
+    if (result != -1) {
+        printf("Il maggioritario è: %d", result);
+    } else {
+        printf("Non esiste maggioritario");
+    }
 
 
     return 0;
