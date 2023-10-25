@@ -54,7 +54,7 @@ int r_majority(int l, int r, int *vec){
 int val_count(int l, int r, int val, int *vec){
     int count = 0;
 
-    for (int i = l; i < r; ++i) {
+    for (int i = l; i <= r; ++i) {
         if(vec[i] == val) count++;
     }
     return count;
