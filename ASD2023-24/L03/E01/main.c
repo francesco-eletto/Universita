@@ -25,9 +25,13 @@ int main(){
 }
 
 int majority(int *vec, int N){
-    int l = 0, r = N-1;
+    int l = 0, r = N-1, result, count;
 
-    return r_majority(l,r,vec);
+    result = r_majority(l,r,vec);
+    count = val_count(l, r,result , vec);
+
+    if(count > N/2) return result;
+    return -1;
 }
 
 int r_majority(int l, int r, int *vec){
@@ -53,6 +57,5 @@ int val_count(int l, int r, int val, int *vec){
     for (int i = l; i < r; ++i) {
         if(vec[i] == val) count++;
     }
-    if (count <= (r-l)/2) return -1;
     return count;
 }
