@@ -2,6 +2,8 @@
 #include "malloc.h"
 
 int majority(int *vec, int N);
+int r_majority(int l, int r, int *vec);
+int val_count(int l, int r, int magl, int *vec);
 
 int main(){
     int N, *vec;
@@ -22,6 +24,22 @@ int main(){
 int majority(int *vec, int N){
     int l = 0, r = N-1;
 
-    return r_majority();
+    return r_majority(l,r,vec);
+}
+
+int r_majority(int l, int r, int *vec){
+    int q, magl, magr, countl = 0, countr = 0;
+
+    if(l >= r) return vec[r];
+    q = (l+r)/2;
+
+    magl = r_majority(l, q, vec);
+    countl = val_count(l, q, magl, vec);
+    magr = r_majority(q+1,r, vec);
+    countr = val_count(q+1, r, magr, vec);
+
+    if(magr == magl) return magr;
+    if(countr >= countl) return magr;
+    return magl;
 
 }
