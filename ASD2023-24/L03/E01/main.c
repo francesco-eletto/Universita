@@ -1,6 +1,8 @@
 #include "stdio.h"
 #include "malloc.h"
 
+int majority(int *vec, int N);
+
 int main(){
     int N, *vec;
 
@@ -13,5 +15,13 @@ int main(){
 
     }
 
+
     return 0;
+}
+
+int majority(int *vec, int N){
+    int l = 0, r = N-1;
+
+    return r_majority();
+
 }
