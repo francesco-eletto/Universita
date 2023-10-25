@@ -6,7 +6,7 @@ int r_majority(int l, int r, int *vec);
 int val_count(int l, int r, int val, int *vec);
 
 int main(){
-    int N, *vec;
+    int N, *vec, result;
 
     printf("Dimensione del vettore:\n");
     scanf("%d", &N);
@@ -16,6 +16,9 @@ int main(){
         scanf("%d",&vec[i]);
 
     }
+
+    result = majority(vec, N);
+    printf("%d", result);
 
 
     return 0;
