@@ -17,7 +17,7 @@ int main() {
     int len;
 
     len = fileRead("../brani.txt", &playlistPerUser);
-    multiplyAlgorithm(playlistPerUser,len);
+    printf("Il numero di playlist e': %d", multiplyAlgorithm(playlistPerUser,len));
 
     return 0;
 }
@@ -43,7 +43,7 @@ int r_multiplyAlgorithm(char **sol, int pos, int n, s_playlistPerUser *playlistP
 
     for (int i = 0; i < playlistPerUser[pos].num; ++i) {
         strcpy(sol[pos], playlistPerUser[pos].brani[i]);
-        r_multiplyAlgorithm(sol,pos+1,n,playlistPerUser,count);
+        count = r_multiplyAlgorithm(sol,pos+1,n,playlistPerUser,count);
     }
     return count;
 }
