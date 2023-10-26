@@ -2,9 +2,10 @@
 #include "malloc.h"
 #include "string.h"
 #define MAXLEN 255
+#define MAXCHOICE 5
 
 typedef struct {
-    char brani[5][MAXLEN];
+    char brani[MAXCHOICE][MAXLEN];
     int num;
 }s_playlistPerUser;
 
