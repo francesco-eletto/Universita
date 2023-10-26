@@ -26,7 +26,7 @@ int fileRead(char *fileName, s_playlistPerUser **playlistPerUser){
     fIn =fopen(fileName, "r");
     fscanf(fIn,"%d", &len);
     tmp_playlistPerUser = (s_playlistPerUser *)malloc(len* sizeof(s_playlistPerUser));
-    playlistPerUser = tmp_playlistPerUser;
+    *playlistPerUser = tmp_playlistPerUser;
     return len;
 
 }
