@@ -12,6 +12,8 @@ void partsAlgorithm();
 void partsAlgorithmR();
 int check(int *sol, s_graph *p_graph);
 
+
+
 int main(int argc, char **argv) {
 
     s_graph *p_graph;
