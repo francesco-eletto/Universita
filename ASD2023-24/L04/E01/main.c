@@ -10,7 +10,7 @@ void graphRead(s_graph *p_graph, char *fileName);
 s_graph *graphInit();
 void partsAlgorithm();
 void partsAlgorithmR();
-int check(int *val, int *sol, s_graph *p_graph);
+int check(int *sol, s_graph *p_graph);
 
 int main(int argc, char **argv) {
 
@@ -51,7 +51,7 @@ void graphRead(s_graph *p_graph, char *fileName){
     }
 }
 
-int check(int *val, int *sol, s_graph *p_graph){
+int check(int *sol, s_graph *p_graph){
 
     int success = 1;
 
@@ -77,7 +77,7 @@ void partsAlgorithm(int n, s_graph *p_graph){
 
 void partsAlgorithmR(int pos, int *val, int *sol, int n, s_graph *p_graph){
     if(pos >= n){
-        if(check(val, sol, p_graph)){
+        if(check(sol, p_graph)){
             for (int i = 0; i < n; ++i) {
                 if(sol[i]!=0) {
                     printf("%d ", val[i]);
