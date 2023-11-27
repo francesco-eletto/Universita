@@ -8,6 +8,8 @@ typedef struct grafo {
 
 void graphRead(struct grafo *sp_grafo, char *fileName);
 struct grafo *graphInit();
+void partsAlgorithm();
+void partsAlgorithmR();
 
 int main(int argc, char **argv) {
 
@@ -15,6 +17,7 @@ int main(int argc, char **argv) {
 
     p_grafo = graphInit();
     graphRead(p_grafo, argv[1]);
+    partsAlgorithm(p_grafo->N, p_grafo);
 
     return 0;
 }
@@ -45,4 +48,38 @@ void graphRead(struct grafo *sp_grafo, char *fileName){
             fscanf(fIn, "%d", &(sp_grafo->archi[i][j]));
         }
     }
+}
+
+void partsAlgorithm(int n, struct grafo *p_grafo){
+
+    int *val, *sol;
+
+    val = (int *) malloc(n*sizeof(int));
+    sol = (int *) malloc(n*sizeof(int));
+    for (int i = 0; i < n; ++i) {
+        val[i] = i;
+    }
+    partsAlgorithmR(0,val,sol,n,p_grafo);
+
+}
+
+void partsAlgorithmR(int pos, int *val, int *sol, int n, struct grafo *p_grafo){
+    if(pos >= n){
+        if(1){
+            for (int i = 0; i < n; ++i) {
+                if(sol[i]!=0) {
+                    printf("%d ", val[i]);
+                }
+            }
+            printf("\n");
+            return;
+        }
+    }
+
+    sol[pos] = 0;
+    partsAlgorithmR(pos+1,val,sol,n,p_grafo);
+    sol[pos] = 1;
+    partsAlgorithmR(pos+1,val,sol,n,p_grafo);
+    return;
+
 }
