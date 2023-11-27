@@ -10,6 +10,7 @@ void graphRead(struct grafo *sp_grafo, char *fileName);
 struct grafo *graphInit();
 void partsAlgorithm();
 void partsAlgorithmR();
+int check(int *val, int *sol, struct grafo *p_grafo);
 
 int main(int argc, char **argv) {
 
@@ -50,6 +51,17 @@ void graphRead(struct grafo *sp_grafo, char *fileName){
     }
 }
 
+int check(int *val, int *sol, struct grafo *p_grafo){
+
+    int success = 1;
+
+    for (int i = 0; i < p_grafo->E; ++i) {
+        if(!(sol[p_grafo->archi[i][0]] || sol[p_grafo->archi[i][1]])) success = 0;
+    }
+    return success;
+
+}
+
 void partsAlgorithm(int n, struct grafo *p_grafo){
 
     int *val, *sol;
@@ -65,15 +77,15 @@ void partsAlgorithm(int n, struct grafo *p_grafo){
 
 void partsAlgorithmR(int pos, int *val, int *sol, int n, struct grafo *p_grafo){
     if(pos >= n){
-        if(1){
+        if(check(val, sol, p_grafo)){
             for (int i = 0; i < n; ++i) {
                 if(sol[i]!=0) {
                     printf("%d ", val[i]);
                 }
             }
             printf("\n");
-            return;
         }
+        return;
     }
 
     sol[pos] = 0;
