@@ -37,6 +37,8 @@ void fileRead(char *fileName, s_list *p_list);
 s_item searchByCode(int code, s_list *p_list);
 s_item itemVoid();
 void itemPrint(s_item item);
+s_node *deleteByCode(int code, s_list *p_list);
+
 
 
 int main() {
@@ -45,7 +47,9 @@ int main() {
     p_list = newList();
 
     fileRead("../anag1.txt",p_list);
+    fileRead("../anag2.txt",p_list);
     itemPrint(searchByCode(2,p_list));
+    deleteByCode(5, p_list);
 
     return 0;
 }
@@ -147,5 +151,30 @@ s_item searchByCode(int code, s_list *p_list){
 void itemPrint(s_item item){
 
     printf("A%.4d %s %s %.2d/%.2d/%.4d %s %s %.5d", item.codice, item.nome, item.cognome, item.dataNascita.giorno, item.dataNascita.mese, item.dataNascita.anno, item.via, item.citta, item.cap);
+
+}
+
+s_node *deleteByCode(int code, s_list *p_list){
+
+    s_node *x, *p, *tmp;
+
+    if(p_list->head->item.codice == code){
+        tmp = p_list->head->next;
+        free(p_list->head);
+        (p_list->N)--;
+        return tmp;
+    }
+
+    p = NULL;
+    for (x = p_list->head; x != NULL && x->item.codice != code; p = x, x = x->next){
+    }
+    if(x == NULL) return NULL;
+    tmp = x;
+    p->next = x->next;
+    (p_list->N)--;
+    free(tmp);
+    return p_list->head;
+
+
 
 }
