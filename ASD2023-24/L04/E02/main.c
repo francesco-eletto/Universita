@@ -33,7 +33,7 @@ s_list *newList();
 s_node *newNode(s_node *next, s_item);
 int dataGrater(s_data data1, s_data data2);
 s_node *listSortInsert(s_list *p_list, s_item item);
-void fileRead(char *fileName, s_list *list);
+void fileRead(char *fileName, s_list *p_list);
 
 
 int main() {
@@ -41,21 +41,7 @@ int main() {
     s_list *p_list;
     p_list = newList();
 
-    s_item item1, item2, item3;
-
-    /*item1.dataNascita.anno = 2023;
-    item2.dataNascita.anno = 2021;
-    item3.dataNascita.anno = 2009;
-    item1.dataNascita.mese = 12;
-    item2.dataNascita.mese = 8;
-    item3.dataNascita.mese = 2;
-    item1.dataNascita.giorno = 7;
-    item2.dataNascita.giorno = 31;
-    item3.dataNascita.giorno = 25;
-
-    p_list->head = listSortInsert(p_list, item1);
-    p_list->head = listSortInsert(p_list, item2);
-    p_list->head = listSortInsert(p_list, item3);*/
+    fileRead("../anag1.txt",p_list);
 
     return 0;
 }
@@ -99,7 +85,7 @@ s_node *listSortInsert(s_list *p_list, s_item item){
     if(p_list->head == NULL || dataGrater(item.dataNascita, p_list->head->item.dataNascita)){
         if((tmp = newNode(p_list->head,item)) == NULL) return NULL;
         (p_list->N)++;
-        return p_list->head;
+        return tmp;
     }
 
     p = NULL;
@@ -107,5 +93,23 @@ s_node *listSortInsert(s_list *p_list, s_item item){
     if ((p->next = newNode(x, item)) == NULL) return NULL;
     (p_list->N)++;
     return p_list->head;
+
+}
+
+void fileRead(char *fileName, s_list *p_list){
+
+    FILE *fIn;
+    s_item TMP_item;
+    s_node *TMPp_head;
+
+    fIn = fopen(fileName,"r");
+    while ((fscanf(fIn, "A%d %s %s %d/%d/%d %s %s %d ",&TMP_item.codice,TMP_item.nome,TMP_item.cognome,&TMP_item.dataNascita.giorno,&TMP_item.dataNascita.mese,&TMP_item.dataNascita.anno,TMP_item.via,TMP_item.citta,&TMP_item.cap)) != EOF){
+        TMPp_head = listSortInsert(p_list, TMP_item);
+        if(TMPp_head == NULL){
+            printf("Impossibile allocare memoria!");
+            return;
+        }
+        p_list->head = TMPp_head;
+    }
 
 }
