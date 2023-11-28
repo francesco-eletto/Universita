@@ -34,6 +34,9 @@ s_node *newNode(s_node *next, s_item);
 int dataGrater(s_data data1, s_data data2);
 s_node *listSortInsert(s_list *p_list, s_item item);
 void fileRead(char *fileName, s_list *p_list);
+s_item searchByCode(int code, s_list *p_list);
+s_item itemVoid();
+void itemPrint(s_item item);
 
 
 int main() {
@@ -42,6 +45,7 @@ int main() {
     p_list = newList();
 
     fileRead("../anag1.txt",p_list);
+    itemPrint(searchByCode(2,p_list));
 
     return 0;
 }
@@ -111,5 +115,37 @@ void fileRead(char *fileName, s_list *p_list){
         }
         p_list->head = TMPp_head;
     }
+
+}
+
+s_item itemVoid(){
+    s_item TMP_item;
+
+    TMP_item.dataNascita.anno = -1;
+    TMP_item.dataNascita.giorno = -1;
+    TMP_item.dataNascita.mese = -1;
+    TMP_item.codice = -1;
+    TMP_item.cap = -1;
+    strcpy(TMP_item.citta,"NULL");
+    strcpy(TMP_item.nome,"NULL");
+    strcpy(TMP_item.cognome,"NULL");
+
+    return TMP_item;
+
+}
+
+s_item searchByCode(int code, s_list *p_list){
+
+    s_node *x;
+
+    for (x = p_list->head; x != NULL && x->item.codice != code; x = x->next) {
+    }
+    if(x == NULL) return itemVoid();
+    return x->item;
+}
+
+void itemPrint(s_item item){
+
+    printf("A%.4d %s %s %.2d/%.2d/%.4d %s %s %.5d", item.codice, item.nome, item.cognome, item.dataNascita.giorno, item.dataNascita.mese, item.dataNascita.anno, item.via, item.citta, item.cap);
 
 }
