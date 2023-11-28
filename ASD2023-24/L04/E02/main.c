@@ -29,6 +29,8 @@ typedef struct{
     int N;
 }s_list;
 
+int found = 1;
+
 s_list *newList();
 s_node *newNode(s_node *next, s_item);
 int dataGrater(s_data data1, s_data data2);
@@ -38,7 +40,7 @@ s_item searchByCode(int code, s_list *p_list);
 s_item itemVoid();
 void itemPrint(s_item item);
 s_node *deleteByCode(int code, s_list *p_list);
-
+s_item deleteByDataRange(s_data data1, s_data data2, s_list *p_list);
 
 
 int main() {
@@ -48,8 +50,27 @@ int main() {
 
     fileRead("../anag1.txt",p_list);
     fileRead("../anag2.txt",p_list);
-    itemPrint(searchByCode(2,p_list));
-    deleteByCode(5, p_list);
+
+
+    s_data data1, data2;
+
+    data1.anno = 1994;
+    data1.mese = 11;
+    data1.giorno = 2;
+    data2.anno = 2002;
+    data2.mese = 9;
+    data2.giorno = 26;
+
+    s_item TMP_item;
+
+    for (int i = 0; found == 1; ++i) {
+        TMP_item = deleteByDataRange(data1,data2, p_list);
+        if(strcmp(TMP_item.nome, "NULL") == 0){
+
+        } else{
+            itemPrint(TMP_item);
+        }
+    }
 
     return 0;
 }
@@ -81,7 +102,7 @@ int dataGrater(s_data data1, s_data data2){
 
     if(data1.anno > data2.anno) return 1;
     if(data1.anno == data2.anno && data1.mese > data2.mese) return 1;
-    if(data1.anno == data2.anno && data1.mese == data2.mese && data1.giorno > data2.giorno) return 1;
+    if(data1.anno == data2.anno && data1.mese == data2.mese && data1.giorno >= data2.giorno) return 1;
 
     return 0;
 }
@@ -150,7 +171,7 @@ s_item searchByCode(int code, s_list *p_list){
 
 void itemPrint(s_item item){
 
-    printf("A%.4d %s %s %.2d/%.2d/%.4d %s %s %.5d", item.codice, item.nome, item.cognome, item.dataNascita.giorno, item.dataNascita.mese, item.dataNascita.anno, item.via, item.citta, item.cap);
+    printf("A%.4d %s %s %.2d/%.2d/%.4d %s %s %.5d\n", item.codice, item.nome, item.cognome, item.dataNascita.giorno, item.dataNascita.mese, item.dataNascita.anno, item.via, item.citta, item.cap);
 
 }
 
@@ -174,6 +195,35 @@ s_node *deleteByCode(int code, s_list *p_list){
     (p_list->N)--;
     free(tmp);
     return p_list->head;
+
+}
+
+s_item deleteByDataRange(s_data data1, s_data data2, s_list *p_list){
+
+    s_node *x, *p, *tmp;
+    s_item TMP_item;
+
+    found = 0;
+    if(dataGrater(p_list->head->item.dataNascita, data1) && dataGrater(data2, p_list->head->item.dataNascita)){
+        found = 1;
+        TMP_item = p_list->head->item;
+        tmp = p_list->head->next;
+        free(p_list->head);
+        (p_list->N)--;
+        p_list->head = tmp;
+        return TMP_item;
+    }
+
+    for(p = NULL, x = p_list->head; x != NULL && (dataGrater(data1, x->item.dataNascita) || dataGrater(x->item.dataNascita, data2)); p = x, x = x->next){
+    }
+    if(x == NULL) return itemVoid();
+    found = 1;
+    TMP_item = x->item;
+    tmp = x;
+    p->next = x->next;
+    (p_list->N)--;
+    free(tmp);
+    return TMP_item;
 
 
 
