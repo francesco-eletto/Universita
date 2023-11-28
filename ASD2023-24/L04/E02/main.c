@@ -3,7 +3,6 @@
 #include <malloc.h>
 #include <string.h>
 #define MAXLEN 50
-#define MAXDATASTRINGLEN 8
 
 typedef struct{
     int giorno, mese, anno;
@@ -34,6 +33,7 @@ s_list *newList();
 s_node *newNode(s_node *next, s_item);
 int dataGrater(s_data data1, s_data data2);
 s_node *listSortInsert(s_list *p_list, s_item item);
+void fileRead(char *fileName, s_list *list);
 
 
 int main() {
@@ -76,6 +76,7 @@ s_node *newNode(s_node *next, s_item item){
     s_node *TMPp_node;
 
     TMPp_node = (s_node *) malloc(sizeof(s_node));
+    if (TMPp_node == NULL) return NULL;
     TMPp_node->next = next;
     TMPp_node->item = item;
 
@@ -93,15 +94,18 @@ int dataGrater(s_data data1, s_data data2){
 
 s_node *listSortInsert(s_list *p_list, s_item item){
 
-    s_node *x, *p;
+    s_node *x, *p, *tmp;
 
     if(p_list->head == NULL || dataGrater(item.dataNascita, p_list->head->item.dataNascita)){
-        return newNode(p_list->head,item);
+        if((tmp = newNode(p_list->head,item)) == NULL) return NULL;
+        (p_list->N)++;
+        return p_list->head;
     }
 
     p = NULL;
     for (x = p_list->head; x != NULL && dataGrater(x->item.dataNascita, item.dataNascita); p = x, x = x->next);
-    p->next = newNode(x, item);
+    if ((p->next = newNode(x, item)) == NULL) return NULL;
+    (p_list->N)++;
     return p_list->head;
 
 }
