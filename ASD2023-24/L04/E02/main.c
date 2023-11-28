@@ -15,9 +15,9 @@ typedef struct{
 
 }s_item;
 
-typedef struct {
+typedef struct _s_node{
     s_item item;
-    struct s_node *next;
+    struct _s_node *next;
 }s_node;
 
 typedef struct{
@@ -26,6 +26,7 @@ typedef struct{
 }s_list;
 
 s_list *newList();
+s_node *newNode(s_node *next, s_item);
 
 
 int main() {
@@ -46,4 +47,15 @@ s_list *newList(){
     TMPp_list->head = NULL;
 
     return TMPp_list;
+}
+
+s_node *newNode(s_node *next, s_item item){
+
+    s_node *TMPp_node;
+
+    TMPp_node = (s_node *) malloc(sizeof(s_node));
+    TMPp_node->next = next;
+    TMPp_node->item = item;
+
+    return TMPp_node;
 }
