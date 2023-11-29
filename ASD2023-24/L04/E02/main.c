@@ -41,6 +41,7 @@ s_item itemVoid();
 void itemPrint(s_item item);
 s_node *deleteByCode(int code, s_list *p_list);
 s_item deleteByDataRange(s_data data1, s_data data2, s_list *p_list);
+void printOnFile(char *file, s_list *p_list);
 
 
 int main() {
@@ -48,7 +49,7 @@ int main() {
     s_list *p_list;
     p_list = newList();
 
-    fileRead("../anag1.txt",p_list);
+    /*fileRead("../anag1.txt",p_list);
     fileRead("../anag2.txt",p_list);
 
 
@@ -71,6 +72,8 @@ int main() {
             itemPrint(TMP_item);
         }
     }
+
+    printOnFile("../output.txt", p_list);*/
 
     return 0;
 }
@@ -140,6 +143,7 @@ void fileRead(char *fileName, s_list *p_list){
         }
         p_list->head = TMPp_head;
     }
+    fclose(fIn);
 
 }
 
@@ -225,6 +229,17 @@ s_item deleteByDataRange(s_data data1, s_data data2, s_list *p_list){
     free(tmp);
     return TMP_item;
 
+}
 
+void printOnFile(char *file, s_list *p_list){
 
+    FILE *fOut;
+    s_node *x;
+
+    fOut = fopen(file,"w");
+    for (x = p_list->head; x != NULL; x = x->next) {
+        fprintf(fOut, "A%.4d %s %s %.2d/%.2d/%.4d %s %s %.5d\n", x->item.codice, x->item.nome, x->item.cognome, x->item.dataNascita.giorno, x->item.dataNascita.mese, x->item.dataNascita.anno, x->item.via, x->item.citta, x->item.cap);
+
+    }
+    fclose(fOut);
 }
