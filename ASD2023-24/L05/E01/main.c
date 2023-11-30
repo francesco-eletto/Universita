@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
 
     p_att = fileRead(argv[1], &len);
     sequenceMaker(len,p_att);
+    free(p_att);
     return 0;
 }
 
@@ -30,7 +31,7 @@ s_att *fileRead(char *fileName, int *p_len){
 
     fIn = fopen(fileName,"r");
     fscanf(fIn,"%d",p_len);
-    TMPp_att = (s_att *)malloc(*p_len * sizeof(s_att)); //TODO deallocare
+    TMPp_att = (s_att *)malloc(*p_len * sizeof(s_att));
 
     for (int i = 0; i < *p_len; ++i) {
         fscanf(fIn, "%d %d",&TMPp_att[i].sTime, &TMPp_att[i].fTime);
@@ -43,13 +44,16 @@ s_att *fileRead(char *fileName, int *p_len){
 
 void sequenceMaker(int len, s_att *p_att){
 
-    int *sol, *maxSol, *result, maxLen = 0, resultLen; //TODO deallocare
+    int *sol, *maxSol, *result, maxLen = 0, resultLen;
 
     maxSol = (int *)malloc(len * sizeof(int));
     sol = (int *)malloc(len * sizeof(int));
     result = (int *)malloc(len * sizeof(int));
     powerset_disp_rip_ricors(0,sol,result,len,p_att, maxSol, &maxLen, &resultLen);
     sequencePrint(p_att,resultLen, result);
+    free(sol);
+    free(maxSol);
+    free(result);
 }
 
 void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_att, int *maxSol, int *maxLen, int *resultLen){
