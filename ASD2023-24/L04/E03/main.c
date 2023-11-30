@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "string.h"
 #include "malloc.h"
-#define LEN 4
+#define LEN 5
 #define MAXLEN 100
 
 typedef struct {
