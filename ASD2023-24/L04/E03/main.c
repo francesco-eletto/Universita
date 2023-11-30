@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
     fscanf(fIn,"%d",&len);
 
     for (int i = 0; i < len; ++i) {
+        printf("TEST#%d\n", i+1);
         fscanf(fIn,"%d %d %d %d", &collana.nz, &collana.nr, &collana.nt, &collana.ns);
         sequenceMaker(collana);
     }
@@ -43,6 +44,7 @@ void sequenceMaker(s_collana collana){
     len = collana.ns + collana.nt + collana.nz + collana.nr;
     strcpy(val,"zrts");
 
+    printf("zaffiro = %d, rubino = %d, topazio = %d, smeraldo = %d, TOT = %d\n", collana.nz, collana.nr, collana.nt, collana.ns, len);
     for (int i = len; i > 0 && found == 0; --i) {
         pruning = 1;
         r_disp_ripet(0,val,sol,LEN,i, &collana);
@@ -56,9 +58,10 @@ void r_disp_ripet(int pos, char *val, char *sol, int n, int k, s_collana *collan
     if(pos >= k){
         found = 1;
         for (int i = 0; i < k; ++i) {
-            printf("%c",sol[i]);
+            printf("%c ",sol[i]);
         }
-        printf("\n");
+        printf("\nCollana massima di lunghezza %d\n\n", k);
+
         return;
     }
 
