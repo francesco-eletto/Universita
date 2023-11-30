@@ -7,11 +7,11 @@ typedef struct{
 
 s_att *fileRead(char *fileName, int *p_len);
 void sequenceMaker(int len, s_att *p_att);
-void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_att, int *maxSol, int *maxLen, int *resultLen);
+void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_att, int *maxSol, int *maxTime, int *maxLen);
 int resultVectorMaker(int *result, int len, int *sol);
 int check(s_att *p_att, int *result, int len);
 int getResultTime(s_att *p_att, int len, int *result);
-void sequencePrint(s_att *p_att, int len, int *result);
+void sequencePrint(s_att *p_att, int len, int *maxSol);
 
 int main(int argc, char **argv) {
 
@@ -44,27 +44,28 @@ s_att *fileRead(char *fileName, int *p_len){
 
 void sequenceMaker(int len, s_att *p_att){
 
-    int *sol, *maxSol, *result, maxLen = 0, resultLen;
+    int *sol, *maxSol, *result, maxTime = 0, maxLen = 0, resultLen;
 
     maxSol = (int *)malloc(len * sizeof(int));
     sol = (int *)malloc(len * sizeof(int));
     result = (int *)malloc(len * sizeof(int));
-    powerset_disp_rip_ricors(0,sol,result,len,p_att, maxSol, &maxLen, &resultLen);
-    sequencePrint(p_att,resultLen, result);
+    powerset_disp_rip_ricors(0, sol, result, len, p_att, maxSol, &maxTime, &maxLen);
+    sequencePrint(p_att,maxLen, maxSol);
     free(sol);
     free(maxSol);
     free(result);
 }
 
-void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_att, int *maxSol, int *maxLen, int *resultLen){
-    int resultTime;
+void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_att, int *maxSol, int *maxTime, int *maxLen){
+    int resultTime, resultLen;
 
     if(pos >= n){
-        *resultLen = resultVectorMaker(result,n,sol);
-        if((!check(p_att,result,*resultLen)) && *maxLen < (resultTime = getResultTime(p_att, *resultLen, result))){
-            *maxLen = resultTime;
-            for (int i = 0; i < *resultLen; ++i) {
+        resultLen = resultVectorMaker(result,n,sol);
+        if((!check(p_att,result,resultLen)) && *maxTime < (resultTime = getResultTime(p_att,resultLen, result))){
+            *maxTime = resultTime;
+            for (int i = 0; i < resultLen; ++i) {
                 maxSol[i] = result[i];
+                *maxLen = resultLen;
             }
         }
 
@@ -72,18 +73,21 @@ void powerset_disp_rip_ricors(int pos, int *sol, int *result, int n, s_att *p_at
     }
 
 
-    sol[pos] = 1;
-    powerset_disp_rip_ricors(pos+1,sol,result,n,p_att, maxSol, maxLen, resultLen);
     sol[pos] = 0;
-    powerset_disp_rip_ricors(pos+1,sol,result,n,p_att, maxSol, maxLen, resultLen);
+    powerset_disp_rip_ricors(pos+1, sol, result, n, p_att, maxSol, maxTime, maxLen);
+    sol[pos] = 1;
+    powerset_disp_rip_ricors(pos+1, sol, result, n, p_att, maxSol, maxTime, maxLen);
 }
 
 int resultVectorMaker(int *result, int len, int *sol){
     int j = 0;
 
     for (int i = 0; i < len; ++i) {
-        if(sol[i]) result[j] = i;
-        j++;
+        if(sol[i]){
+            result[j] = i;
+            j++;
+        }
+
     }
     return j;
 }
@@ -109,10 +113,10 @@ int getResultTime(s_att *p_att, int len, int *result){
     return time;
 }
 
-void sequencePrint(s_att *p_att, int len, int *result){
+void sequencePrint(s_att *p_att, int len, int *maxSol){
 
     for (int i = 0; i < len; ++i) {
-        printf("(%d %d) ", p_att[result[i]].sTime, p_att[result[i]].fTime);
+        printf("(%d %d) ", p_att[maxSol[i]].sTime, p_att[maxSol[i]].fTime);
 
     }
     printf("\n");
