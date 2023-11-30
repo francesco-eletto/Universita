@@ -8,13 +8,13 @@ typedef struct {
     int nz, nr, nt, ns;
 }s_collana;
 
-int found;
+int found, pruning;
 
 void sequenceMaker(s_collana collana);
 void r_disp_ripet(int pos, char *val, char *sol, int n, int k, s_collana *collana);
 int collanaCheckNum(s_collana collana, int index);
 void collanaUpdateNum(s_collana *collana, int index, int value);
-
+int check(char followingC, char c);
 
 
 int main(int argc, char **argv) {
@@ -44,6 +44,7 @@ void sequenceMaker(s_collana collana){
     strcpy(val,"zrts");
 
     for (int i = len; i > 0 && found == 0; --i) {
+        pruning = 1;
         r_disp_ripet(0,val,sol,LEN,i, &collana);
     }
 
@@ -51,7 +52,7 @@ void sequenceMaker(s_collana collana){
 }
 
 void r_disp_ripet(int pos, char *val, char *sol, int n, int k, s_collana *collana){
-    if(found) return;
+    if(found || !pruning) return;
     if(pos >= k){
         found = 1;
         for (int i = 0; i < k; ++i) {
@@ -65,7 +66,11 @@ void r_disp_ripet(int pos, char *val, char *sol, int n, int k, s_collana *collan
         if(collanaCheckNum(*collana,i)){
             collanaUpdateNum(collana,i,-1);
             sol[pos] = val[i];
+            if(pos != 0){
+                pruning = check(sol[pos], sol[pos-1]);
+            }
             r_disp_ripet(pos+1,val,sol,n,k,collana);
+            pruning = 1;
             collanaUpdateNum(collana,i,1);
         }
     }
@@ -106,4 +111,22 @@ void collanaUpdateNum(s_collana *collana, int index, int value){
             collana->ns = collana->ns + value;
             break;
     }
+}
+
+int check(char followingC, char c){
+    switch (c) {
+        case 'z':
+            if(followingC == 'z' || followingC == 'r') return 1;
+            break;
+        case 'r':
+            if(followingC == 's' || followingC == 't') return 1;
+            break;
+        case 't':
+            if(followingC == 'z' || followingC == 'r') return 1;
+            break;
+        case 's':
+            if(followingC == 's' || followingC == 't') return 1;
+            break;
+    }
+    return 0;
 }
