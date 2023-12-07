@@ -1,7 +1,13 @@
 #include <stdio.h>
-#include <malloc.h>
+#include "characters.h"
 
 int main() {
+
+    sp_list list;
+
+    list = listInitialize();
+    fileRead("../pg.txt", list);
+    deleteByCode(list,9);
 
     return 0;
 }
