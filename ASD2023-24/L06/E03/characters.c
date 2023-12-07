@@ -59,7 +59,7 @@ int fileRead(char *fileName, sp_list list){
     return 0;
 }
 
-int searchByCode(sp_list list, int code){
+sp_character searchByCode(sp_list list, int code){
 
     sp_node x;
     int TMP_code;
@@ -68,11 +68,11 @@ int searchByCode(sp_list list, int code){
         sscanf(x->character.code, "PG%d",&TMP_code);
         if(TMP_code == code){
             printf("Personaggio trovato: %s %s %s %d %d %d %d %d %d", x->character.code, x->character.name, x->character.class, x->character.hp, x->character.mp, x->character.atk, x->character.def, x->character.mag, x->character.spr);
-            return 0;
+            return &x->character;
         }
     }
 
-    return 3;
+    return NULL;
 
 }
 
@@ -99,3 +99,33 @@ int deleteByCode(sp_list list, int code){
 
 }
 
+int addItem(sp_inventorySetW inventorySetW, sp_list list, int pgCode, char *itemName){
+
+    sp_inventory TMP_inventory;
+    sp_character TMP_character;
+
+    if((TMP_inventory = searchByName(itemName,inventorySetW)) != NULL && (TMP_character = searchByCode(list,pgCode)) != NULL){
+        TMP_character->equip[TMP_character->equipLen] = TMP_inventory;
+        TMP_character->equipLen++;
+        return 0;
+    }
+    return 8;
+}
+
+int removeItem(sp_list list, int pgCode, char *itemName){
+
+    sp_character TMP_character;
+
+    if((TMP_character = searchByCode(list,pgCode)) != NULL){
+        for (int i = 0; i < TMP_character->equipLen; ++i) {
+            if(TMP_character->equip[i]->name == itemName){
+                TMP_character->equip[i] == NULL;
+                TMP_character->equipLen--;
+                return 0;
+            }
+        }
+
+        return 9;
+    }
+    return 8;
+}

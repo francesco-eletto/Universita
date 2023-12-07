@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "characters.h"
+#include "inventory.h"
 
 int main() {
 
