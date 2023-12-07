@@ -12,6 +12,7 @@ typedef struct {
     int len, MaxLen;
 } *sp_inventorySetW;
 
+sp_inventorySetW inventorySetInitialize();
 int inventorySetRead(char* fileName, sp_inventorySetW inventorySetW);
 sp_inventory searchByName(char *name, sp_inventorySetW inventorySetW);
 

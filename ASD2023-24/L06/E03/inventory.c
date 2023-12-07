@@ -3,6 +3,17 @@
 #include <malloc.h>
 #include <string.h>
 
+sp_inventorySetW inventorySetInitialize(){
+    sp_inventorySetW TMP_inventorySet;
+
+    TMP_inventorySet = (sp_inventorySetW) malloc(sizeof(*TMP_inventorySet));
+    TMP_inventorySet->inventorySet = NULL;
+    TMP_inventorySet->len = 0;
+    TMP_inventorySet->MaxLen = 0;
+
+    return TMP_inventorySet;
+}
+
 int inventorySetRead(char* fileName, sp_inventorySetW inventorySetW){
 
     FILE *fIn;
@@ -24,8 +35,8 @@ int inventorySetRead(char* fileName, sp_inventorySetW inventorySetW){
 sp_inventory searchByName(char *name, sp_inventorySetW inventorySetW){
 
     for (int i = 0; i < inventorySetW->len; ++i) {
-        if(inventorySetW->inventorySet[i].name == name){
-            printf("%s %s %d %d %d %d %d %d", inventorySetW->inventorySet[i].name, inventorySetW->inventorySet[i].type, (inventorySetW->inventorySet[i].hpMod), (inventorySetW->inventorySet[i].mpMod), (inventorySetW->inventorySet[i].atkMod), (inventorySetW->inventorySet[i].defMod), (inventorySetW->inventorySet[i].magMod), (inventorySetW->inventorySet[i].sprMod));
+        if(!strcmp(inventorySetW->inventorySet[i].name, name)){
+            printf("%s %s %d %d %d %d %d %d\n", inventorySetW->inventorySet[i].name, inventorySetW->inventorySet[i].type, (inventorySetW->inventorySet[i].hpMod), (inventorySetW->inventorySet[i].mpMod), (inventorySetW->inventorySet[i].atkMod), (inventorySetW->inventorySet[i].defMod), (inventorySetW->inventorySet[i].magMod), (inventorySetW->inventorySet[i].sprMod));
             return &inventorySetW->inventorySet[i];
         }
     }

@@ -30,6 +30,7 @@ sp_node newNode(sp_node next, s_character character){
     if((TMPp_node = (sp_node) malloc(sizeof(struct S_node))) == NULL) return TMPp_node;
     TMPp_node->next = next;
     TMPp_node->character = character;
+    TMPp_node->character.equipLen = 0;
 
     return TMPp_node;
 
@@ -63,15 +64,23 @@ sp_character searchByCode(sp_list list, int code){
 
     sp_node x;
     int TMP_code;
+    sp_character TMP_character = NULL;
 
     for (x = list->head; x != NULL; x = x->next){
         sscanf(x->character.code, "PG%d",&TMP_code);
         if(TMP_code == code){
-            printf("Personaggio trovato: %s %s %s %d %d %d %d %d %d", x->character.code, x->character.name, x->character.class, x->character.hp, x->character.mp, x->character.atk, x->character.def, x->character.mag, x->character.spr);
-            return &x->character;
+            printf("Personaggio trovato: %s %s %s %d %d %d %d %d %d\n", x->character.code, x->character.name, x->character.class, x->character.hp, x->character.mp, x->character.atk, x->character.def, x->character.mag, x->character.spr);
+            TMP_character = &x->character;
+            if(x->character.equipLen){
+                printf("Ogetti posseduti:\n");
+                for (int i = 0; i < x->character.equipLen; ++i) {
+                    printf("%s %s %d %d %d %d %d %d\n", x->character.equip[i]->name, x->character.equip[i]->type, x->character.equip[i]->hpMod, x->character.equip[i]->mpMod, x->character.equip[i]->atkMod, x->character.equip[i]->defMod, x->character.equip[i]->magMod, x->character.equip[i]->sprMod);
+                }
+            }
+            return TMP_character;
         }
-    }
 
+    }
     return NULL;
 
 }
