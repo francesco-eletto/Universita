@@ -119,7 +119,7 @@ int removeItem(sp_list list, int pgCode, char *itemName){
     if((TMP_character = searchByCode(list,pgCode)) != NULL){
         for (int i = 0; i < TMP_character->equipLen; ++i) {
             if(TMP_character->equip[i]->name == itemName){
-                TMP_character->equip[i] == NULL;
+                TMP_character->equip[i] = NULL;
                 TMP_character->equipLen--;
                 return 0;
             }
