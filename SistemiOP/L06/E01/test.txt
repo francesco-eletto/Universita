@@ -1,0 +1,54 @@
+Binary Numbers:
+000
+Binary Numbers:
+010
+Binary Numbers:
+110
+Binary Numbers:
+100
+Binary Numbers:
+001
+Binary Numbers:
+011
+Binary Numbers:
+111
+Binary Numbers:
+101
+Binary Numbers:
+000
+Binary Numbers:
+010
+Binary Numbers:
+110
+Binary Numbers:
+100
+Binary Numbers:
+000
+Binary Numbers:
+100
+Binary Numbers:
+001
+Binary Numbers:
+101
+Binary Numbers:
+000
+Binary Numbers:
+100
+Binary Numbers:
+000
+Binary Numbers:
+001
+Binary Numbers:
+010
+Binary Numbers:
+011
+Binary Numbers:
+000
+Binary Numbers:
+010
+Binary Numbers:
+000
+Binary Numbers:
+001
+Binary Numbers:
+000
