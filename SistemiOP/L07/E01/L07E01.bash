@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-
-
 list=$(find "$1" -name "*.c" -readable)
 for i in $list; do
     tmp=$(cat "$i" | grep -e "\<$2(" | wc -l)
